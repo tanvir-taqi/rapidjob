@@ -38,7 +38,7 @@ const Alljobs = ({ jobs }) => {
          cover ,
          jobID: id
         }
-        fetch('http://localhost:3000/api/jobapply', {
+        fetch('https://rapidjob-vnxt.vercel.app/api/jobapply', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -209,7 +209,7 @@ const Alljobs = ({ jobs }) => {
 
 export async function getServerSideProps() {
     // Fetch data from external API
-    const res = await fetch(`http://localhost:3000/api/findjobs`)
+    const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs`)
     const jobs = await res.json()
 
     // Pass data to the page via props

@@ -74,20 +74,11 @@ const Join = () => {
                                 displayName: name,
                                 photoURL: photo
                             }
-                            console.log("userInfo outside userUpdate",userInfo);
-                            console.log("user",user);
+                            
                             if(user){
-                                // userUpdate(userInfo)
-                                // .then(() => {
-                                    console.log("userInfo in userUpdate");
+                                
                                     addUserToDb(userProfile)
-                                    
-                                // })
-                                // .catch(err => {
-                                //     setLoading(false)
-                                //     console.log(err)
-                                //     setErrorMsg("Something went wrong")
-                                // });
+                                                     
                             }
                            
                         })
@@ -109,7 +100,7 @@ const Join = () => {
 
     // add user to the database
     const addUserToDb = (profile) => {
-         fetch('http://localhost:3000/api/userpost', {
+         fetch('https://rapidjob-vnxt.vercel.app/api/userpost', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -58,7 +58,7 @@ const PostAJob = () => {
                     wfh
                 }
 
-                fetch('http://localhost:3000/api/jobpost', {
+                fetch('https://rapidjob-vnxt.vercel.app/api/jobpost', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
