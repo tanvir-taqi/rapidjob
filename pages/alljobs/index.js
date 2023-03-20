@@ -102,7 +102,7 @@ const Alljobs = () => {
                                 key={job._id}
                                 className='grid md:grid-cols-3 grid-cols-1 bg-[#63a0e5b6] rounded items-center justify-center'>
                                 <div className='flex items-center justify-start my-2'>
-                                    <img src={job?.logo} className='w-8 h-8 rounded-full' alt="" />
+                                    <img src={job?.logo} className='w-8 h-8 rounded-full mx-1' alt="" />
                                     <h1 className="text-lg font-medium mx-2">{job?.company}</h1>
                                     <p>{job?.location}</p>
                                 </div>
