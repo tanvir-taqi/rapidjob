@@ -15,20 +15,25 @@ const Alljobs = () => {
     const router = useRouter()
 
 
-    useEffect( ()=>{
-        setJobsLoading(true)
-        fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs?searchValue=${searchValue}`)
-        .then(res => res.json())
-        .then(data => {
-            setJobsLoading(false)
-            setJobs(data)
-        })
-        .catch(error => {
-            setJobsLoading(false)
-            console.error('Error fetching data:', error)
-        })
+    // useEffect( ()=>{
+    //     setJobsLoading(true)
+    //     fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs?searchValue=${searchValue}`)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         setJobsLoading(false)
+    //         setJobs(data)
+    //     })
+    //     .catch(error => {
+    //         setJobsLoading(false)
+    //         console.error('Error fetching data:', error)
+    //     })
     
-    },[searchValue])
+    // },[searchValue])
+    const handleSearchValue =(event)=>{
+        event.preventDefault()
+        setSearchValue(event.target.value)
+
+    }
 
     const handleJobApply = (event, id) => {
         event.preventDefault()
@@ -91,7 +96,7 @@ const Alljobs = () => {
 
                 <div className='flex w-full my-12 justify-center'>
                     <div className='md:w-2/3 w-full p-1 bg-[#63a0e5b6] flex justify-center'>
-                        <input onChange={(event)=>setSearchValue(event.target.value)} type="text" name='searchjob' className='outline-none p-1 text-lg font-medium rounded w-3/4' />
+                        <input onChange={handleSearchValue} type="text" name='searchjob' className='outline-none p-1 text-lg font-medium rounded w-3/4' />
                         <label htmlFor="searchjob" className='md:px-6 md:py-2 px-3 py-1 border md:mx-3 mx-1 font-bold md:text-lg text-base duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[white] before:transition-transform before:content-[""] hover:text-[#071b3f] before:hover:scale-y-100 before:-z-10'>Search Jobs</label>
                     </div>
                 </div>
@@ -124,7 +129,7 @@ const Alljobs = () => {
                                     {
 
                                         // job details modal
-                                        displayModal && <div className='absolute top-0 right-0 z-50  overflow-y-scroll bg-[#071b3fbb] min-h-full text-black text-lg  w-full  flex justify-center items-center'>
+                                        displayModal && <div className='absolute top-0 right-0 z-50  overflow-y-scroll bg-[#071b3fbb] min-h-screen text-black text-lg  w-full  flex justify-center items-center'>
                                             <div className='md:w-3/4 bg-white py-6 px-2 w-full'>
                                                 <p onClick={() => setDisplayModal(false)} className='p-2 border border-black bg-[#fef] w-24  text-center rounded cursor-pointer'>Close</p>
                                                 <div className='flex items-center justify-start my-4'>
@@ -137,7 +142,6 @@ const Alljobs = () => {
                                                     <p className='mx-3'> <span className='font-bold'>Job Type:</span>  {job?.wfh} <small className='font-medium'>{job?.jobtype}</small></p>
                                                 </div>
                                                 <div className='flex items-center justify-center  my-2'>
-
                                                     <p className='mx-3'> <span className='font-bold'> Experience Required:</span>  {job?.experience}years </p>
                                                     <p className='mx-3'> <span className='font-bold'> Estimated Salary:</span>  {job?.stipend}USD/month </p>
                                                 </div>
@@ -146,7 +150,7 @@ const Alljobs = () => {
                                                 <p className='my-4'> <span className='font-bold'>Requirements:</span> {job?.requirements}</p>
                                                 <p className='my-4'> <span className='font-bold'></span> {job?.message}</p>
                                                 {
-                                                    job?.recruiter === user?.email && <button className=' px-3 py-1 border  mx-1 font-bold md:text-lg text-base text-[#071b3f] bg-[#fff] duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[#071b3f] before:transition-transform before:content-[""] hover:text-white before:hover:scale-y-100 before:-z-10 '
+                                                    job?.recruiter === user?.email || <button className=' px-3 py-1 border  mx-1 font-bold md:text-lg text-base text-[#071b3f] bg-[#fff] duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[#071b3f] before:transition-transform before:content-[""] hover:text-white before:hover:scale-y-100 before:-z-10 '
                                                         onClick={() => setapplyForm(!applyForm)}>Apply Now</button>
                                                 }
 
@@ -226,13 +230,13 @@ const Alljobs = () => {
 };
 
 
-// export async function getServerSideProps() {
-//     // Fetch data from external API
-//     const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs`)
-//     const jobs = await res.json()
+export async function getServerSideProps() {
+    // Fetch data from external API
+    const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs`)
+    const jobs = await res.json()
 
-//     // Pass data to the page via props
-//     return { props: { jobs } }
-// }
+    // Pass data to the page via props
+    return { props: { jobs } }
+}
 
 export default Alljobs;
