@@ -11,13 +11,22 @@ const Alljobs = () => {
     const [applyForm, setapplyForm] = useState(false)
     const [searchValue, setSearchValue] = useState('')
     const [jobs, setJobs] = useState([])
+    const [jobsLoading,setJobsLoading] = useState(false)
     const router = useRouter()
 
 
-    useEffect(async ()=>{
-        const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs?searchValue=${searchValue}`)
-        const alljobs = await res.json()
-        setJobs(alljobs)
+    useEffect( ()=>{
+        setJobsLoading(true)
+        fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs?searchValue=${searchValue}`)
+        .then(res => res.json())
+        .then(data => {
+            setJobsLoading(false)
+            setJobs(data)
+        })
+        .catch(error => {
+            setJobsLoading(false)
+            console.error('Error fetching data:', error)
+        })
     
     },[searchValue])
 
@@ -71,7 +80,7 @@ const Alljobs = () => {
     // if(!user?.email){
     //     router?.push("/join")
     // }
-    if (loading) {
+    if (loading || jobsLoading) {
         return <LoadingSpinner></LoadingSpinner>
     }
     return (
@@ -82,7 +91,7 @@ const Alljobs = () => {
 
                 <div className='flex w-full my-12 justify-center'>
                     <div className='md:w-2/3 w-full p-1 bg-[#63a0e5b6] flex justify-center'>
-                        <input type="text" name='searchjob' className='outline-none p-1 text-lg font-medium rounded w-3/4' />
+                        <input onChange={(event)=>setSearchValue(event.target.value)} type="text" name='searchjob' className='outline-none p-1 text-lg font-medium rounded w-3/4' />
                         <label htmlFor="searchjob" className='md:px-6 md:py-2 px-3 py-1 border md:mx-3 mx-1 font-bold md:text-lg text-base duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[white] before:transition-transform before:content-[""] hover:text-[#071b3f] before:hover:scale-y-100 before:-z-10'>Search Jobs</label>
                     </div>
                 </div>
@@ -105,7 +114,7 @@ const Alljobs = () => {
                                 <div className='flex items-center justify-center my-2'>
                                     {
                                         user?.email ? <button className=' px-3 py-1 border  mx-1 font-bold md:text-lg text-base text-[#071b3f] bg-[#fff] duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[#071b3f] before:transition-transform before:content-[""] hover:text-white before:hover:scale-y-100 before:-z-10 ' onClick={() => setDisplayModal(true)}>View Details</button>
-                                            : <Link href='/join' className='underline'>Sign In to Post A Job</Link>
+                                            : <Link href='/join' className='underline'>Sign In to View Details</Link>
                                     }
 
                                 </div>
