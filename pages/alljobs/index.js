@@ -3,13 +3,23 @@ import { AuthContext } from '@/utils/userContext/UserContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-const Alljobs = ({ jobs }) => {
+const Alljobs = () => {
     const { user, loading } = useContext(AuthContext)
     const [displayModal, setDisplayModal] = useState(false)
     const [applyForm, setapplyForm] = useState(false)
+    const [searchValue, setSearchValue] = useState('')
+    const [jobs, setJobs] = useState([])
     const router = useRouter()
+
+
+    useEffect(async ()=>{
+        const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs?searchValue=${searchValue}`)
+        const alljobs = await res.json()
+        setJobs(alljobs)
+    
+    },[searchValue])
 
     const handleJobApply = (event, id) => {
         event.preventDefault()
@@ -24,19 +34,19 @@ const Alljobs = ({ jobs }) => {
         const github = form.github.value
         const resume = form.resume.value
         const cover = form.cover.value
-        
+
         const application = {
-             email ,
-         name ,
-         skills ,
-         proects ,
-         experience ,
-        currentSalary: cctc ,
-        expSalary: ectc ,
-         github ,
-         resume ,
-         cover ,
-         jobID: id
+            email,
+            name,
+            skills,
+            proects,
+            experience,
+            currentSalary: cctc,
+            expSalary: ectc,
+            github,
+            resume,
+            cover,
+            jobID: id
         }
         fetch('https://rapidjob-vnxt.vercel.app/api/jobapply', {
             method: 'POST',
@@ -95,7 +105,7 @@ const Alljobs = ({ jobs }) => {
                                 <div className='flex items-center justify-center my-2'>
                                     {
                                         user?.email ? <button className=' px-3 py-1 border  mx-1 font-bold md:text-lg text-base text-[#071b3f] bg-[#fff] duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[#071b3f] before:transition-transform before:content-[""] hover:text-white before:hover:scale-y-100 before:-z-10 ' onClick={() => setDisplayModal(true)}>View Details</button>
-                                            : <Link href='/join' className='underline'>Sign In to View Details</Link>
+                                            : <Link href='/join' className='underline'>Sign In to Post A Job</Link>
                                     }
 
                                 </div>
@@ -207,13 +217,13 @@ const Alljobs = ({ jobs }) => {
 };
 
 
-export async function getServerSideProps() {
-    // Fetch data from external API
-    const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs`)
-    const jobs = await res.json()
+// export async function getServerSideProps() {
+//     // Fetch data from external API
+//     const res = await fetch(`https://rapidjob-vnxt.vercel.app/api/findjobs`)
+//     const jobs = await res.json()
 
-    // Pass data to the page via props
-    return { props: { jobs } }
-}
+//     // Pass data to the page via props
+//     return { props: { jobs } }
+// }
 
 export default Alljobs;
