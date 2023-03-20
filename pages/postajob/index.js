@@ -1,5 +1,6 @@
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AuthContext } from '@/utils/userContext/UserContext';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 
