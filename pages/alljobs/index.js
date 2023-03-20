@@ -127,7 +127,7 @@ const Alljobs = ({ jobs }) => {
                                                 <p className='my-4'> <span className='font-bold'>Requirements:</span> {job?.requirements}</p>
                                                 <p className='my-4'> <span className='font-bold'></span> {job?.message}</p>
                                                 {
-                                                    job?.recruiter === user?.email || <button className=' px-3 py-1 border  mx-1 font-bold md:text-lg text-base text-[#071b3f] bg-[#fff] duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[#071b3f] before:transition-transform before:content-[""] hover:text-white before:hover:scale-y-100 before:-z-10 '
+                                                    job?.recruiter === user?.email && <button className=' px-3 py-1 border  mx-1 font-bold md:text-lg text-base text-[#071b3f] bg-[#fff] duration-500 hover:scale-105 before:duration-500  relative before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-bottom-left before:scale-y-0 before:bg-[#071b3f] before:transition-transform before:content-[""] hover:text-white before:hover:scale-y-100 before:-z-10 '
                                                         onClick={() => setapplyForm(!applyForm)}>Apply Now</button>
                                                 }
 

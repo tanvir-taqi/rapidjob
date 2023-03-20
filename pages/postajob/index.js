@@ -159,8 +159,12 @@ const PostAJob = () => {
                             <textarea name="message" id="message" cols="30" rows="6" className='px-4 py-1 my-2 rounded-md outline-none' ></textarea>
                         </div>
                         <div className="form-control flex flex-col items-end">
+                            {
+                                user?.email ?  <input type="submit" value='Post the job' name="company" id="company" className='px-4 py-1 rounded-md outline-none duration-300 w-56 bg-[#071b3e] hover:bg-[#071b3ed3] hover:scale-105 text-white font-bold ' />
+                                : <Link href='/join' className='underline'>Sign In to View Details</Link>
+                            }
 
-                            <input type="submit" value='Post the job' name="company" id="company" className='px-4 py-1 rounded-md outline-none duration-300 w-56 bg-[#071b3e] hover:bg-[#071b3ed3] hover:scale-105 text-white font-bold ' />
+                           
                         </div>
 
                     </form>
