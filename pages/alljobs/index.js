@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 
-const Alljobs = () => {
+const Alljobs = ({ jobs }) => {
     const { user, loading } = useContext(AuthContext)
     const [displayModal, setDisplayModal] = useState(false)
     const [applyForm, setapplyForm] = useState(false)
